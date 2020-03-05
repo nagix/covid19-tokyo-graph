@@ -26,6 +26,10 @@ var initialNodes = [
 	{ id: 'non-tokyo', label: '都外', width: 100, height: 30, rx: 5, ry: 5, style: 'stroke: #aaa; fill: #fff;' }
 ];
 
+var clusters = [
+	{ id: 'yakatabune', label: '屋形船新年会クラスター', clusterLabelPos: 'top', style: 'stroke: #cc9; fill: #ffc;', nodes:[4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 16, 27] }
+];
+
 var boxColors = {
 	'男性': {stroke: '#559', fill: '#ccf'},
 	'女性': {stroke: '#955', fill: '#fcc'}
@@ -55,9 +59,9 @@ var fullwidthToHalfwith = function(s) {
 	});
 };
 
-var tooltip = d3.select("body").append("div")
-	.attr("class", "tooltip")
-	.style("opacity", 0);
+var tooltip = d3.select('body').append('div')
+	.attr('class', 'tooltip')
+	.style('opacity', 0);
 
 loadJSON(DATA_URL).then(function(data) {
 
@@ -103,7 +107,7 @@ loadJSON(DATA_URL).then(function(data) {
 			style: 'stroke: ' + (dead ? '#f00' : colors.stroke) +
 				'; stroke-width: ' + (dead ? 3 : 1) +
 				'; fill: ' + colors.fill,
-			description: 'No: ' + patient['No'] +
+			description: 'No: ' + id +
 				'<br>居住地: ' + patient['居住地'] +
 				'<br>年代: ' + patient['年代'] +
 				'<br>性別: ' + patient['性別'] +
@@ -123,9 +127,19 @@ loadJSON(DATA_URL).then(function(data) {
 				lineInterpolate: 'monotone',
 				lineTension: 0.0,
 				style: 'stroke: #aaa; fill: none; stroke-width: 1.5px;',
-				arrowheadStyle: "fill: #aaa"
+				arrowheadStyle: 'fill: #aaa'
 			});
 		});
+
+		clusters.forEach(function(cluster) {
+			if (cluster.nodes.indexOf(id) !== -1) {
+				graph.setParent(id, cluster.id)
+			}
+		});
+	});
+
+	clusters.forEach(function(cluster) {
+		graph.setNode(cluster.id, cluster);
 	});
 
 	var svg = d3.select('#network');
@@ -140,22 +154,22 @@ loadJSON(DATA_URL).then(function(data) {
 	var render = new dagreD3.render();
 	render(inner, graph);
 
-	inner.selectAll("g.node")
-		.on("mouseover", function(d) {
+	inner.selectAll('g.node')
+		.on('mouseover', function(d) {
 			tooltip.transition()
 				.duration(200)
-				.style("opacity", .9);
+				.style('opacity', .9);
 			tooltip.html(graph.node(d).description)
-				.style("left", (d3.event.pageX) + "px")
-				.style("top", (d3.event.pageY - 28) + "px");
+				.style('left', (d3.event.pageX) + 'px')
+				.style('top', (d3.event.pageY - 28) + 'px');
 		})
-		.on("mouseout", function(d) {
+		.on('mouseout', function(d) {
 			tooltip.transition()
 				.duration(500)
-				.style("opacity", 0);
+				.style('opacity', 0);
 		})
 
-	var initialScale = 0.55;
+	var initialScale = 0.66;
 	zoom
 		.translate([(svg.attr('width') - graph.graph().width * initialScale) / 2, 20])
 		.scale(initialScale)
