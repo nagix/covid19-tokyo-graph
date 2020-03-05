@@ -1,0 +1,5 @@
+body {
+	font: 16px/24px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+	color: #333;
+	touch-action: none;
+}

@@ -1,123 +1,128 @@
-var nodes = [
-    { id: "china", label: "中国", width: 100, height: 30, rx: 5, ry: 5, style: "stroke: #333; fill: #fff;" },
-    { id: "unknown", label: "不明", width: 100, height: 30, rx: 5, ry: 5, style: "stroke: #333; fill: #fff;" },
-    { id: "non-tokyo", label: "都外", width: 100, height: 30, rx: 5, ry: 5, style: "stroke: #333; fill: #fff;" },
-    { id: "1", label: "40代男性 武漢市からの旅行者", width: 300, height: 30, rx: 5, ry: 5, style: "stroke: #333; fill: #ccf;" },
-    { id: "2", label: "30代女性 武漢市からの旅行者", width: 300, height: 30, rx: 5, ry: 5, style: "stroke: #333; fill: #fcc;" },
-    { id: "3", label: "30代女性 中国からのツアーコンダクター", width: 300, height: 30, rx: 5, ry: 5, style: "stroke: #333; fill: #fcc;" },
-    { id: "4", label: "70代男性 タクシー運転手", width: 300, height: 30, rx: 5, ry: 5, style: "stroke: #333; fill: #ccf;" },
-    { id: "5", label: "50代女性 団体職員", width: 300, height: 30, rx: 5, ry: 5, style: "stroke: #333; fill: #fcc;" },
-    { id: "6", label: "70代男性 屋形船アルバイト", width: 300, height: 30, rx: 5, ry: 5, style: "stroke: #333; fill: #ccf;" },
-    { id: "7", label: "80代男性 タクシー運転手", width: 300, height: 30, rx: 5, ry: 5, style: "stroke: #333; fill: #ccf;" },
-    { id: "8", label: "50代女性 タクシー運転手の同居者(看護師)", width: 300, height: 30, rx: 5, ry: 5, style: "stroke: #333; fill: #fcc;" },
-    { id: "9", label: "50代男性 タクシー運転手", width: 300, height: 30, rx: 5, ry: 5, style: "stroke: #333; fill: #ccf;" },
-    { id: "10", label: "70代男性 タクシー運転手", width: 300, height: 30, rx: 5, ry: 5, style: "stroke: #333; fill: #ccf;" },
-    { id: "11", label: "70代男性 タクシー運転手", width: 300, height: 30, rx: 5, ry: 5, style: "stroke: #333; fill: #ccf;" },
-    { id: "12", label: "40代男性 屋形船従事者", width: 300, height: 30, rx: 5, ry: 5, style: "stroke: #333; fill: #ccf;" },
-    { id: "13", label: "60代女性 タクシー運転手の同居者", width: 300, height: 30, rx: 5, ry: 5, style: "stroke: #333; fill: #fcc;" },
-    { id: "14", label: "40代男性 会社員", width: 300, height: 30, rx: 5, ry: 5, style: "stroke: #333; fill: #ccf;" },
-    { id: "15", label: "60代男性 タクシー運転手", width: 300, height: 30, rx: 5, ry: 5, style: "stroke: #333; fill: #ccf;" },
-    { id: "16", label: "30代男性 タクシー運転手の同居者", width: 300, height: 30, rx: 5, ry: 5, style: "stroke: #333; fill: #ccf;" },
-    { id: "17", label: "60代男性 医療従事者（医師）", width: 300, height: 30, rx: 5, ry: 5, style: "stroke: #333; fill: #ccf;" },
-    { id: "18", label: "60代男性 ハイヤー運転手", width: 300, height: 30, rx: 5, ry: 5, style: "stroke: #333; fill: #ccf;" },
-    { id: "19", label: "30代男性 ハイヤー運転手", width: 300, height: 30, rx: 5, ry: 5, style: "stroke: #333; fill: #ccf;" },
-    { id: "20", label: "80代男性 無職", width: 300, height: 30, rx: 5, ry: 5, style: "stroke: #f00; stroke-width: 3; fill: #ccf;" },
-    { id: "21", label: "20代男性 会社員", width: 300, height: 30, rx: 5, ry: 5, style: "stroke: #333; fill: #ccf;" },
-    { id: "22", label: "50代男性 会社員", width: 300, height: 30, rx: 5, ry: 5, style: "stroke: #333; fill: #ccf;" },
-    { id: "23", label: "70代男性 無職", width: 300, height: 30, rx: 5, ry: 5, style: "stroke: #333; fill: #ccf;" },
-    { id: "24", label: "70代女性 無職", width: 300, height: 30, rx: 5, ry: 5, style: "stroke: #333; fill: #fcc;" },
-    { id: "25", label: "70代女性 無職", width: 300, height: 30, rx: 5, ry: 5, style: "stroke: #333; fill: #fcc;" },
-    { id: "26", label: "50代女性 パート職員", width: 300, height: 30, rx: 5, ry: 5, style: "stroke: #333; fill: #fcc;" },
-    { id: "27", label: "70代女性 自営業", width: 300, height: 30, rx: 5, ry: 5, style: "stroke: #333; fill: #fcc;" },
-    { id: "28", label: "50代女性 無職", width: 300, height: 30, rx: 5, ry: 5, style: "stroke: #333; fill: #fcc;" },
-    { id: "29", label: "60代男性 施設職員", width: 300, height: 30, rx: 5, ry: 5, style: "stroke: #333; fill: #ccf;" },
-    { id: "30", label: "40代男性 会社員", width: 300, height: 30, rx: 5, ry: 5, style: "stroke: #333; fill: #ccf;" },
-    { id: "31", label: "50代男性 会社員", width: 300, height: 30, rx: 5, ry: 5, style: "stroke: #333; fill: #ccf;" },
-    { id: "32", label: "30代男性 会社員", width: 300, height: 30, rx: 5, ry: 5, style: "stroke: #333; fill: #ccf;" },
-    { id: "33", label: "80代男性 無職", width: 300, height: 30, rx: 5, ry: 5, style: "stroke: #333; fill: #ccf;" },
-    { id: "34", label: "70代男性 会社員", width: 300, height: 30, rx: 5, ry: 5, style: "stroke: #333; fill: #ccf;" },
-    { id: "35", label: "70代男性 会社員", width: 300, height: 30, rx: 5, ry: 5, style: "stroke: #333; fill: #ccf;" },
-    { id: "36", label: "60代女性 無職", width: 300, height: 30, rx: 5, ry: 5, style: "stroke: #333; fill: #fcc;" },
-    { id: "37", label: "20代女性 医療従事者", width: 300, height: 30, rx: 5, ry: 5, style: "stroke: #333; fill: #fcc;" },
-    { id: "38", label: "50代女性 医療従事者", width: 300, height: 30, rx: 5, ry: 5, style: "stroke: #333; fill: #fcc;" },
-    { id: "39", label: "70代男性 無職", width: 300, height: 30, rx: 5, ry: 5, style: "stroke: #333; fill: #ccf;" },
-    { id: "40", label: "50代女性 会社員", width: 300, height: 30, rx: 5, ry: 5, style: "stroke: #333; fill: #fcc;" },
-    { id: "41", label: "80代女性 無職", width: 300, height: 30, rx: 5, ry: 5, style: "stroke: #333; fill: #fcc;" },
-    { id: "42", label: "30代女性 施設職員", width: 300, height: 30, rx: 5, ry: 5, style: "stroke: #333; fill: #fcc;" },
-    { id: "43", label: "50代男性 会社員", width: 300, height: 30, rx: 5, ry: 5, style: "stroke: #333; fill: #ccf;" },
-    { id: "44", label: "40代女性 会社員", width: 300, height: 30, rx: 5, ry: 5, style: "stroke: #333; fill: #fcc;" }
+/*
+ * Copyright 2020 Akihiko Kusanagi
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ *
+ * More information about this project is available at:
+ *
+ *    https://github.com/nagix/covid19-tokyo-graph
+ */
+
+var DATA_URL = 'https://cdn.jsdelivr.net/gh/tokyo-metropolitan-gov/covid19@development/data/data.json';
+
+var initialNodes = [
+	{ id: 'china', label: '中国', width: 100, height: 30, rx: 5, ry: 5, style: 'stroke: #aaa; fill: #fff;' },
+	{ id: 'unknown', label: '不明', width: 100, height: 30, rx: 5, ry: 5, style: 'stroke: #aaa; fill: #fff;' },
+	{ id: 'non-tokyo', label: '都外', width: 100, height: 30, rx: 5, ry: 5, style: 'stroke: #aaa; fill: #fff;' }
 ];
 
-var edges = [
-    { sourceId: "china", targetId: "1", label: "", arrowhead: "normal", lineInterpolate: "monotone", lineTension: 0.0, style: "stroke: #333; fill: none; stroke-width: 1.5px;" },
-    { sourceId: "china", targetId: "2", label: "", arrowhead: "normal", lineInterpolate: "monotone", lineTension: 0.0, style: "stroke: #333; fill: none; stroke-width: 1.5px;" },
-    { sourceId: "china", targetId: "3", label: "", arrowhead: "normal", lineInterpolate: "monotone", lineTension: 0.0, style: "stroke: #333; fill: none; stroke-width: 1.5px;" },
-    { sourceId: "unknown", targetId: "4", label: "", arrowhead: "normal", lineInterpolate: "monotone", lineTension: 0.0, style: "stroke: #333; fill: none; stroke-width: 1.5px;" },
-    { sourceId: "4", targetId: "5", label: "", arrowhead: "normal", lineInterpolate: "monotone", lineTension: 0.0, style: "stroke: #333; fill: none; stroke-width: 1.5px;" },
-    { sourceId: "4", targetId: "6", label: "", arrowhead: "normal", lineInterpolate: "monotone", lineTension: 0.0, style: "stroke: #333; fill: none; stroke-width: 1.5px;" },
-    { sourceId: "4", targetId: "7", label: "", arrowhead: "normal", lineInterpolate: "monotone", lineTension: 0.0, style: "stroke: #333; fill: none; stroke-width: 1.5px;" },
-    { sourceId: "4", targetId: "8", label: "", arrowhead: "normal", lineInterpolate: "monotone", lineTension: 0.0, style: "stroke: #333; fill: none; stroke-width: 1.5px;" },
-    { sourceId: "4", targetId: "9", label: "", arrowhead: "normal", lineInterpolate: "monotone", lineTension: 0.0, style: "stroke: #333; fill: none; stroke-width: 1.5px;" },
-    { sourceId: "4", targetId: "10", label: "", arrowhead: "normal", lineInterpolate: "monotone", lineTension: 0.0, style: "stroke: #333; fill: none; stroke-width: 1.5px;" },
-    { sourceId: "4", targetId: "11", label: "", arrowhead: "normal", lineInterpolate: "monotone", lineTension: 0.0, style: "stroke: #333; fill: none; stroke-width: 1.5px;" },
-    { sourceId: "4", targetId: "12", label: "", arrowhead: "normal", lineInterpolate: "monotone", lineTension: 0.0, style: "stroke: #333; fill: none; stroke-width: 1.5px;" },
-    { sourceId: "4", targetId: "13", label: "", arrowhead: "normal", lineInterpolate: "monotone", lineTension: 0.0, style: "stroke: #333; fill: none; stroke-width: 1.5px;" },
-    { sourceId: "unknown", targetId: "14", label: "", arrowhead: "normal", lineInterpolate: "monotone", lineTension: 0.0, style: "stroke: #333; fill: none; stroke-width: 1.5px;" },
-    { sourceId: "4", targetId: "15", label: "", arrowhead: "normal", lineInterpolate: "monotone", lineTension: 0.0, style: "stroke: #333; fill: none; stroke-width: 1.5px;" },
-    { sourceId: "4", targetId: "16", label: "", arrowhead: "normal", lineInterpolate: "monotone", lineTension: 0.0, style: "stroke: #333; fill: none; stroke-width: 1.5px;" },
-    { sourceId: "8", targetId: "17", label: "", arrowhead: "normal", lineInterpolate: "monotone", lineTension: 0.0, style: "stroke: #333; fill: none; stroke-width: 1.5px;" },
-    { sourceId: "unknown", targetId: "18", label: "", arrowhead: "normal", lineInterpolate: "monotone", lineTension: 0.0, style: "stroke: #333; fill: none; stroke-width: 1.5px;" },
-    { sourceId: "14", targetId: "19", label: "", arrowhead: "normal", lineInterpolate: "monotone", lineTension: 0.0, style: "stroke: #333; fill: none; stroke-width: 1.5px;" },
-    { sourceId: "unknown", targetId: "20", label: "", arrowhead: "normal", lineInterpolate: "monotone", lineTension: 0.0, style: "stroke: #333; fill: none; stroke-width: 1.5px;" },
-    { sourceId: "17", targetId: "21", label: "", arrowhead: "normal", lineInterpolate: "monotone", lineTension: 0.0, style: "stroke: #333; fill: none; stroke-width: 1.5px;" },
-    { sourceId: "unknown", targetId: "22", label: "", arrowhead: "normal", lineInterpolate: "monotone", lineTension: 0.0, style: "stroke: #333; fill: none; stroke-width: 1.5px;" },
-    { sourceId: "unknown", targetId: "23", label: "", arrowhead: "normal", lineInterpolate: "monotone", lineTension: 0.0, style: "stroke: #333; fill: none; stroke-width: 1.5px;" },
-    { sourceId: "23", targetId: "24", label: "", arrowhead: "normal", lineInterpolate: "monotone", lineTension: 0.0, style: "stroke: #333; fill: none; stroke-width: 1.5px;" },
-    { sourceId: "20", targetId: "25", label: "", arrowhead: "normal", lineInterpolate: "monotone", lineTension: 0.0, style: "stroke: #333; fill: none; stroke-width: 1.5px;" },
-    { sourceId: "unknown", targetId: "26", label: "", arrowhead: "normal", lineInterpolate: "monotone", lineTension: 0.0, style: "stroke: #333; fill: none; stroke-width: 1.5px;" },
-    { sourceId: "8", targetId: "27", label: "", arrowhead: "normal", lineInterpolate: "monotone", lineTension: 0.0, style: "stroke: #333; fill: none; stroke-width: 1.5px;" },
-    { sourceId: "17", targetId: "27", label: "", arrowhead: "normal", lineInterpolate: "monotone", lineTension: 0.0, style: "stroke: #333; fill: none; stroke-width: 1.5px;" },
-    { sourceId: "17", targetId: "28", label: "", arrowhead: "normal", lineInterpolate: "monotone", lineTension: 0.0, style: "stroke: #333; fill: none; stroke-width: 1.5px;" },
-    { sourceId: "unknown", targetId: "29", label: "", arrowhead: "normal", lineInterpolate: "monotone", lineTension: 0.0, style: "stroke: #333; fill: none; stroke-width: 1.5px;" },
-    { sourceId: "unknown", targetId: "30", label: "", arrowhead: "normal", lineInterpolate: "monotone", lineTension: 0.0, style: "stroke: #333; fill: none; stroke-width: 1.5px;" },
-    { sourceId: "non-tokyo", targetId: "31", label: "", arrowhead: "normal", lineInterpolate: "monotone", lineTension: 0.0, style: "stroke: #333; fill: none; stroke-width: 1.5px;" },
-    { sourceId: "unknown", targetId: "32", label: "", arrowhead: "normal", lineInterpolate: "monotone", lineTension: 0.0, style: "stroke: #333; fill: none; stroke-width: 1.5px;" },
-    { sourceId: "unknown", targetId: "33", label: "", arrowhead: "normal", lineInterpolate: "monotone", lineTension: 0.0, style: "stroke: #333; fill: none; stroke-width: 1.5px;" },
-    { sourceId: "unknown", targetId: "34", label: "", arrowhead: "normal", lineInterpolate: "monotone", lineTension: 0.0, style: "stroke: #333; fill: none; stroke-width: 1.5px;" },
-    { sourceId: "unknown", targetId: "35", label: "", arrowhead: "normal", lineInterpolate: "monotone", lineTension: 0.0, style: "stroke: #333; fill: none; stroke-width: 1.5px;" },
-    { sourceId: "unknown", targetId: "36", label: "", arrowhead: "normal", lineInterpolate: "monotone", lineTension: 0.0, style: "stroke: #333; fill: none; stroke-width: 1.5px;" },
-    { sourceId: "20", targetId: "37", label: "", arrowhead: "normal", lineInterpolate: "monotone", lineTension: 0.0, style: "stroke: #333; fill: none; stroke-width: 1.5px;" },
-    { sourceId: "25", targetId: "37", label: "", arrowhead: "normal", lineInterpolate: "monotone", lineTension: 0.0, style: "stroke: #333; fill: none; stroke-width: 1.5px;" },
-    { sourceId: "non-tokyo", targetId: "38", label: "", arrowhead: "normal", lineInterpolate: "monotone", lineTension: 0.0, style: "stroke: #333; fill: none; stroke-width: 1.5px;" },
-    { sourceId: "20", targetId: "39", label: "", arrowhead: "normal", lineInterpolate: "monotone", lineTension: 0.0, style: "stroke: #333; fill: none; stroke-width: 1.5px;" },
-    { sourceId: "unknown", targetId: "40", label: "", arrowhead: "normal", lineInterpolate: "monotone", lineTension: 0.0, style: "stroke: #333; fill: none; stroke-width: 1.5px;" },
-    { sourceId: "unknown", targetId: "41", label: "", arrowhead: "normal", lineInterpolate: "monotone", lineTension: 0.0, style: "stroke: #333; fill: none; stroke-width: 1.5px;" },
-    { sourceId: "unknown", targetId: "42", label: "", arrowhead: "normal", lineInterpolate: "monotone", lineTension: 0.0, style: "stroke: #333; fill: none; stroke-width: 1.5px;" },
-    { sourceId: "unknown", targetId: "43", label: "", arrowhead: "normal", lineInterpolate: "monotone", lineTension: 0.0, style: "stroke: #333; fill: none; stroke-width: 1.5px;" },
-    { sourceId: "unknown", targetId: "44", label: "", arrowhead: "normal", lineInterpolate: "monotone", lineTension: 0.0, style: "stroke: #333; fill: none; stroke-width: 1.5px;" }
-];
+var boxColors = {
+	'男性': {stroke: '#99c', fill: '#ccf'},
+	'女性': {stroke: '#c99', fill: '#fcc'}
+};
 
-var graph = new dagreD3.graphlib.Graph({ compound: true });
-graph.setGraph({ rankdir: "LR" });
+function loadJSON(url) {
+	return new Promise(function(resolve, reject) {
+		var request = new XMLHttpRequest();
 
-nodes.forEach(node => graph.setNode(node.id, node));
-edges.forEach(edge => graph.setEdge(edge.sourceId, edge.targetId, edge));
+		request.open('GET', url);
+		request.onreadystatechange = function() {
+			if (request.readyState === 4) {
+				if (request.status === 200) {
+					resolve(JSON.parse(request.response));
+				} else {
+					reject(Error(request.statusText));
+				}
+			}
+		};
+		request.send();
+	});
+}
 
-var svg = d3.select("#network");
-var inner = svg.select("g");
+function fullwidthToHalfwith(s) {
+	return s.replace(/[Ａ-Ｚａ-ｚ０-９]/g, function(s) {
+		return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
+	});
+}
 
-var zoom = d3.behavior.zoom().on("zoom", function () {
-    inner.attr("transform", "translate(" + d3.event.translate + ")" +
-        "scale(" + d3.event.scale + ")");
+loadJSON(DATA_URL).then(data => {
+
+	var graph = new dagreD3.graphlib.Graph({ compound: true });
+	graph.setGraph({ rankdir: 'LR' });
+
+	initialNodes.forEach(node => graph.setNode(node.id, node));
+
+	data.patients.data.forEach(patient => {
+		var id = patient['No'];
+		var attr = patient['属性'] || '';
+		var remarks = patient['備考'] || '';
+		var supplement = patient['補足'] || '';
+		var dead = remarks.match(/死亡/);
+		var colors = boxColors[patient['性別']];
+		var sourceIds = (supplement.match(/[0-9０-９]+/g) || ['unknown'])
+			.map(fullwidthToHalfwith)
+			.map(sourceId => !isNaN(sourceId) && sourceId < id ? sourceId : 'unknown')
+
+		if (attr.match(/武漢|中国/)) {
+			sourceIds = ['china'];
+		} else if (supplement.match(/都外/)) {
+			sourceIds = ['non-tokyo'];
+		}
+		console.log(id, sourceIds)
+
+		graph.setNode(id, {
+			id: id,
+			label: patient['年代'] + patient['性別'] + ' ' + patient['属性'],
+			width: 300,
+			height: 30,
+			rx: 5,
+			ry: 5,
+			style: 'stroke: ' + (dead ? '#f00' : colors.stroke) +
+				'; stroke-width: ' + (dead ? 3 : 1) +
+				'; fill: ' + colors.fill
+		});
+
+		sourceIds.forEach(sourceId => {
+			graph.setEdge(sourceId, id, {
+				sourceId: sourceId < id ? sourceId : 'unknown',
+				targetId: id,
+				label: '',
+				arrowhead: 'normal',
+				lineInterpolate: 'monotone',
+				lineTension: 0.0,
+				style: 'stroke: #aaa; fill: none; stroke-width: 1.5px;'
+			});
+		});
+	});
+
+	var svg = d3.select('#network');
+	var inner = svg.select('g');
+
+	var zoom = d3.behavior.zoom().on('zoom', function () {
+		inner.attr('transform', 'translate(' + d3.event.translate + ')' +
+			'scale(' + d3.event.scale + ')');
+	});
+	svg.call(zoom);
+
+	var render = new dagreD3.render();
+	render(inner, graph);
+
+	var initialScale = 0.60;
+	zoom
+		.translate([(svg.attr('width') - graph.graph().width * initialScale) / 2, 20])
+		.scale(initialScale)
+		.event(svg);
+	svg.attr('height', graph.graph().height * initialScale + 40);
+
+	document.getElementById('last-update').innerHTML = data.patients.date;
 });
-svg.call(zoom);
-
-var render = new dagreD3.render();
-render(inner, graph);
-
-var initialScale = 0.60;
-zoom
-    .translate([(svg.attr("width") - graph.graph().width * initialScale) / 2, 20])
-    .scale(initialScale)
-    .event(svg);
-svg.attr("height", graph.graph().height * initialScale + 40);
