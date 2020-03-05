@@ -31,7 +31,7 @@ var boxColors = {
 	'女性': {stroke: '#c99', fill: '#fcc'}
 };
 
-function loadJSON(url) {
+var loadJSON = function(url) {
 	return new Promise(function(resolve, reject) {
 		var request = new XMLHttpRequest();
 
@@ -47,22 +47,28 @@ function loadJSON(url) {
 		};
 		request.send();
 	});
-}
+};
 
-function fullwidthToHalfwith(s) {
+var fullwidthToHalfwith = function(s) {
 	return s.replace(/[Ａ-Ｚａ-ｚ０-９]/g, function(s) {
 		return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
 	});
-}
+};
 
-loadJSON(DATA_URL).then(data => {
+var tooltip = d3.select("body").append("div")
+	.attr("class", "tooltip")
+	.style("opacity", 0);
+
+loadJSON(DATA_URL).then(function(data) {
 
 	var graph = new dagreD3.graphlib.Graph({ compound: true });
 	graph.setGraph({ rankdir: 'LR' });
 
-	initialNodes.forEach(node => graph.setNode(node.id, node));
+	initialNodes.forEach(function(node) {
+		return graph.setNode(node.id, node);
+	});
 
-	data.patients.data.forEach(patient => {
+	data.patients.data.forEach(function(patient) {
 		var id = patient['No'];
 		var attr = patient['属性'] || '';
 		var remarks = patient['備考'] || '';
@@ -71,28 +77,39 @@ loadJSON(DATA_URL).then(data => {
 		var colors = boxColors[patient['性別']];
 		var sourceIds = (supplement.match(/[0-9０-９]+/g) || ['unknown'])
 			.map(fullwidthToHalfwith)
-			.map(sourceId => !isNaN(sourceId) && sourceId < id ? sourceId : 'unknown')
+			.map(function(sourceId) {
+				return !isNaN(sourceId) && sourceId < id ? sourceId : 'unknown';
+			});
 
 		if (attr.match(/武漢|中国/)) {
 			sourceIds = ['china'];
 		} else if (supplement.match(/都外/)) {
 			sourceIds = ['non-tokyo'];
 		}
-		console.log(id, sourceIds)
 
 		graph.setNode(id, {
 			id: id,
 			label: patient['年代'] + patient['性別'] + ' ' + patient['属性'],
+			labelpos: 'l',
 			width: 300,
 			height: 30,
 			rx: 5,
 			ry: 5,
 			style: 'stroke: ' + (dead ? '#f00' : colors.stroke) +
 				'; stroke-width: ' + (dead ? 3 : 1) +
-				'; fill: ' + colors.fill
+				'; fill: ' + colors.fill,
+			description: 'No: ' + patient['No'] +
+				'<br>居住地: ' + patient['居住地'] +
+				'<br>年代: ' + patient['年代'] +
+				'<br>性別: ' + patient['性別'] +
+				'<br>属性: ' + patient['属性'] +
+				'<br>備考: ' + (patient['備考'] || '') +
+				'<br>補足: ' + (patient['補足'] || '') +
+				'<br>退院: ' + (patient['退院'] || '') +
+				'<br>発表日: ' + patient['short_date']
 		});
 
-		sourceIds.forEach(sourceId => {
+		sourceIds.forEach(function(sourceId) {
 			graph.setEdge(sourceId, id, {
 				sourceId: sourceId < id ? sourceId : 'unknown',
 				targetId: id,
@@ -100,7 +117,8 @@ loadJSON(DATA_URL).then(data => {
 				arrowhead: 'normal',
 				lineInterpolate: 'monotone',
 				lineTension: 0.0,
-				style: 'stroke: #aaa; fill: none; stroke-width: 1.5px;'
+				style: 'stroke: #aaa; fill: none; stroke-width: 1.5px;',
+				arrowheadStyle: "fill: #aaa"
 			});
 		});
 	});
@@ -116,6 +134,21 @@ loadJSON(DATA_URL).then(data => {
 
 	var render = new dagreD3.render();
 	render(inner, graph);
+
+	inner.selectAll("g.node")
+		.on("mouseover", function(d) {
+			tooltip.transition()
+				.duration(200)
+				.style("opacity", .9);
+			tooltip.html(graph.node(d).description)
+				.style("left", (d3.event.pageX) + "px")
+				.style("top", (d3.event.pageY - 28) + "px");
+		})
+		.on("mouseout", function(d) {
+			tooltip.transition()
+				.duration(500)
+				.style("opacity", 0);
+		})
 
 	var initialScale = 0.60;
 	zoom
