@@ -27,8 +27,8 @@ var initialNodes = [
 ];
 
 var boxColors = {
-	'男性': {stroke: '#99c', fill: '#ccf'},
-	'女性': {stroke: '#c99', fill: '#fcc'}
+	'男性': {stroke: '#559', fill: '#ccf'},
+	'女性': {stroke: '#955', fill: '#fcc'}
 };
 
 var loadJSON = function(url) {
@@ -89,9 +89,14 @@ loadJSON(DATA_URL).then(function(data) {
 
 		graph.setNode(id, {
 			id: id,
-			label: patient['年代'] + patient['性別'] + ' ' + patient['属性'],
+			labelType: 'html',
+			label: '<div class="container">' +
+				'<div class="id" style="background-color: ' + colors.stroke + ';">' +
+				id + '</div><div class="label">' +
+				patient['年代'] + patient['性別'] + ' ' + patient['属性'] +
+				'</div></div>',
 			labelpos: 'l',
-			width: 300,
+			width: 350,
 			height: 30,
 			rx: 5,
 			ry: 5,
@@ -150,7 +155,7 @@ loadJSON(DATA_URL).then(function(data) {
 				.style("opacity", 0);
 		})
 
-	var initialScale = 0.60;
+	var initialScale = 0.55;
 	zoom
 		.translate([(svg.attr('width') - graph.graph().width * initialScale) / 2, 20])
 		.scale(initialScale)
