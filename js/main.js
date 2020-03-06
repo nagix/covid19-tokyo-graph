@@ -27,7 +27,7 @@ var initialNodes = [
 ];
 
 var clusters = [
-	{ id: 'yakatabune', label: '屋形船新年会クラスター', clusterLabelPos: 'top', style: 'stroke: #cc9; fill: #ffc;', nodes:[4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 16, 27] }
+	{ id: 'yakatabune', label: '屋形船新年会クラスター', clusterLabelPos: 'top', style: 'fill: #00a040; opacity: 0.2;', nodes:[4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 16, 27] }
 ];
 
 var boxColors = {
