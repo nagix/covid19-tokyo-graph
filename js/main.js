@@ -18,7 +18,7 @@
  *    https://github.com/nagix/covid19-tokyo-graph
  */
 
-var DATA_URL = 'https://cdn.jsdelivr.net/gh/tokyo-metropolitan-gov/covid19@development/data/data.json';
+var DATA_URL = 'https://cdn.jsdelivr.net/gh/tokyo-metropolitan-gov/covid19@master/data/data.json';
 
 var initialNodes = [
 	{ id: 'china', label: '中国', width: 100, height: 30, rx: 5, ry: 5, style: 'stroke: #aaa; fill: #fff;' },
