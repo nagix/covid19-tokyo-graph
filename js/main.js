@@ -96,6 +96,7 @@ loadJSON(DATA_URL).then(function(data) {
 		var remarks = patient['備考'] || '';
 		var supplement = patient['補足'] || '';
 		var discharged = patient['退院'] || '';
+		var severe = remarks.match(/重症/);
 		var dead = remarks.match(/死亡/);
 		var colors = boxColors[sex];
 		var sourceIds = (supplement.match(/[0-9０-９]+/g) || ['unknown'])
@@ -115,16 +116,17 @@ loadJSON(DATA_URL).then(function(data) {
 			labelType: 'html',
 			label: '<div class="container">' +
 				'<div class="id" style="background-color: ' + colors.stroke + ';">' + id + '</div>' +
-				'<div class="label">' + age + sex + ' ' + attr + '</div>' +
-				(discharged ? '<div class="check"></div>' : '') +
-				'</div>',
+				'<div class="label">' + age + sex + ' ' + attr + '</div>' + (
+					dead ? '<div class="dead badge">死亡</div>' :
+					discharged ? '<div class="check"></div>' :
+					severe ? '<div class="severe badge">重症</div>' : ''
+				) + '</div>',
 			labelpos: 'l',
 			width: 380,
 			height: 30,
 			rx: 5,
 			ry: 5,
-			style: 'stroke: ' + (dead ? '#f00' : colors.stroke) +
-				'; stroke-width: ' + (dead ? 3 : 1) +
+			style: 'stroke: ' + colors.stroke +
 				'; fill: ' + colors.fill,
 			description: 'No: ' + id +
 				'<br>居住地: ' + address +

@@ -63,7 +63,6 @@ div.id {
 	height: 100%;
 	border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
-    margin-right: 10px;
     vertical-align: middle;
     line-height: 50px;
     text-align: center;
@@ -71,11 +70,13 @@ div.id {
     color: #fff;
 }
 div.label {
-	width: 310px;
+	width: 350px;
 	height: 100%;
+	padding: 10px;
+	box-sizing: border-box;
 	display: inline-block;
     vertical-align: middle;
-    line-height: 50px;
+    line-height: 30px;
 }
 
 div.check {
@@ -84,7 +85,26 @@ div.check {
 	background: url(images/check.svg) no-repeat center / 20px;
 	display: inline-block;
 	vertical-align: middle;
-	margin: 15px 0;
+	margin: 15px 0 15px -30px;
+}
+
+div.badge {
+	width: 40px;
+	height: 24px;
+	display: inline-block;
+	vertical-align: middle;
+	line-height: 24px;
+	text-align: center;
+	border-radius: 5px;
+	margin: 10px 0 10px -50px;
+}
+div.severe {
+	background-color: #ff8c00;
+	color: #fff;
+}
+div.dead {
+	background-color: #f00;
+	color: #fff;
 }
 
 div.tooltip {
