@@ -42,8 +42,13 @@ div.title {
 	vertical-align: middle;
 }
 
+p.description {
+	margin: 10px 20px;
+	color: #777;
+}
+
 div.container {
-	width: 370px;
+	width: 400px;
 	height: 50px;
 	user-select: none;
 }
@@ -61,15 +66,20 @@ div.id {
     color: #fff;
 }
 div.label {
+	width: 310px;
 	height: 100%;
 	display: inline-block;
     vertical-align: middle;
     line-height: 50px;
 }
 
-p.description {
-	margin: 10px 20px;
-	color: #777;
+div.check {
+	width: 20px;
+	height: 20px;
+	background: url(images/check.svg) no-repeat center / 20px;
+	display: inline-block;
+	vertical-align: middle;
+	margin: 15px 0;
 }
 
 div.tooltip {

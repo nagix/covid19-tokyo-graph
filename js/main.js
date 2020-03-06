@@ -74,11 +74,15 @@ loadJSON(DATA_URL).then(function(data) {
 
 	data.patients.data.forEach(function(patient) {
 		var id = patient['No'];
+		var address = patient['居住地'];
+		var age = patient['年代'];
+		var sex = patient['性別'];
 		var attr = patient['属性'] || '';
 		var remarks = patient['備考'] || '';
 		var supplement = patient['補足'] || '';
+		var discharged = patient['退院'] || '';
 		var dead = remarks.match(/死亡/);
-		var colors = boxColors[patient['性別']];
+		var colors = boxColors[sex];
 		var sourceIds = (supplement.match(/[0-9０-９]+/g) || ['unknown'])
 			.map(fullwidthToHalfwith)
 			.map(function(sourceId) {
@@ -95,12 +99,12 @@ loadJSON(DATA_URL).then(function(data) {
 			id: id,
 			labelType: 'html',
 			label: '<div class="container">' +
-				'<div class="id" style="background-color: ' + colors.stroke + ';">' +
-				id + '</div><div class="label">' +
-				patient['年代'] + patient['性別'] + ' ' + patient['属性'] +
-				'</div></div>',
+				'<div class="id" style="background-color: ' + colors.stroke + ';">' + id + '</div>' +
+				'<div class="label">' + age + sex + ' ' + attr + '</div>' +
+				(discharged ? '<div class="check"></div>' : '') +
+				'</div>',
 			labelpos: 'l',
-			width: 350,
+			width: 380,
 			height: 30,
 			rx: 5,
 			ry: 5,
@@ -108,13 +112,13 @@ loadJSON(DATA_URL).then(function(data) {
 				'; stroke-width: ' + (dead ? 3 : 1) +
 				'; fill: ' + colors.fill,
 			description: 'No: ' + id +
-				'<br>居住地: ' + patient['居住地'] +
-				'<br>年代: ' + patient['年代'] +
-				'<br>性別: ' + patient['性別'] +
-				'<br>属性: ' + patient['属性'] +
-				'<br>備考: ' + (patient['備考'] || '') +
-				'<br>補足: ' + (patient['補足'] || '') +
-				'<br>退院: ' + (patient['退院'] || '') +
+				'<br>居住地: ' + address +
+				'<br>年代: ' + age +
+				'<br>性別: ' + sex +
+				'<br>属性: ' + attr +
+				'<br>備考: ' + remarks +
+				'<br>補足: ' + supplement +
+				'<br>退院: ' + discharged +
 				'<br>発表日: ' + patient['short_date']
 		});
 
