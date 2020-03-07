@@ -18,7 +18,7 @@
  *    https://github.com/nagix/covid19-tokyo-graph
  */
 
-var DATA_URL = 'https://cdn.jsdelivr.net/gh/tokyo-metropolitan-gov/covid19@master/data/data.json';
+var DATA_URL = 'https://cdn.jsdelivr.net/gh/tokyo-metropolitan-gov/covid19@a354a686768965f32ea78abf59f4e6c643d36b48/data/data.json';
 var THEME_COLOR = '#00a040';
 var INITIAL_SCALE = 0.66;
 var GRAPH_MARGIN = 20;
