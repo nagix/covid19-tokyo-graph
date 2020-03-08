@@ -18,7 +18,8 @@
  *    https://github.com/nagix/covid19-tokyo-graph
  */
 
-var DATA_URL = 'https://cdn.jsdelivr.net/gh/tokyo-metropolitan-gov/covid19@a354a686768965f32ea78abf59f4e6c643d36b48/data/data.json';
+var BASE_DATA_URL = 'data/data.json';
+var DATA_URL = 'https://cdn.jsdelivr.net/gh/tokyo-metropolitan-gov/covid19@master/data/data.json';
 var THEME_COLOR = '#00a040';
 var INITIAL_SCALE = 0.66;
 var GRAPH_MARGIN = 20;
@@ -66,7 +67,10 @@ var tooltip = d3.select('body').append('div')
 	.attr('class', 'tooltip')
 	.style('opacity', 0);
 
-loadJSON(DATA_URL).then(function(data) {
+Promise.all([
+	loadJSON(BASE_DATA_URL),
+	loadJSON(DATA_URL)
+]).then(function([baseData, data]) {
 
 	document.getElementById('last-update').innerHTML = data.patients.date;
 
@@ -87,8 +91,18 @@ loadJSON(DATA_URL).then(function(data) {
 		});
 	});
 
-	data.patients.data.forEach(function(patient) {
-		var id = patient['No'];
+	baseData.patients.data.forEach(function(source, i) {
+		var target = data.patients.data[i];
+
+		Object.keys(source).forEach(function(key) {
+			if (target[key] === undefined) {
+				target[key] = source[key];
+			}
+		});
+	});
+
+	data.patients.data.forEach(function(patient, i) {
+		var id = patient['No'] || i + 1;
 		var address = patient['居住地'];
 		var age = patient['年代'];
 		var sex = patient['性別'];
@@ -136,7 +150,7 @@ loadJSON(DATA_URL).then(function(data) {
 				'<br>備考: ' + remarks +
 				'<br>補足: ' + supplement +
 				'<br>退院: ' + discharged +
-				'<br>発表日: ' + patient['short_date']
+				'<br>発表日: ' + patient['date']
 		});
 
 		sourceIds.forEach(function(sourceId) {
