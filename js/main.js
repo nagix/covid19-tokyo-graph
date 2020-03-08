@@ -72,7 +72,9 @@ Promise.all([
 	loadJSON(DATA_URL)
 ]).then(function([baseData, data]) {
 
-	document.getElementById('last-update').innerHTML = data.patients.date;
+	document.getElementById('last-update').innerHTML =
+		data.patients.date > baseData.patients.date ?
+		data.patients.date : baseData.patients.date;
 
 	var graph = new dagreD3.graphlib.Graph({ compound: true });
 	graph.setGraph({ rankdir: 'LR' });
@@ -92,8 +94,12 @@ Promise.all([
 	});
 
 	baseData.patients.data.forEach(function(source, i) {
-		var target = data.patients.data[i];
+		var target = data.patients.data[i]
 
+		if (!target) {
+			target = {};
+			data.patients.data.push(target);
+		}
 		Object.keys(source).forEach(function(key) {
 			if (target[key] === undefined) {
 				target[key] = source[key];
